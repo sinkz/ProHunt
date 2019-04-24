@@ -14,6 +14,13 @@ import { getFakeData } from '../services/FakeData';
 export default class Home extends Component {
   static navigationOptions = {
     title: 'Home',
+    headerStyle: {
+      backgroundColor: '#01a699',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
   };
 
   clickHandler = () => {
@@ -28,7 +35,7 @@ export default class Home extends Component {
         <CustomListview
           itemList={getFakeData()}
         />
-        <FloatButton onPress={this.clickHandler.bind(this)}/>
+        <FloatButton onPress={this.clickHandler.bind(this)} />
       </View>
     );
   }

@@ -27,11 +27,11 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(0,0,0,0.2)',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 70,
+    width: 60,
     position: 'absolute',
     bottom: 10,
     right: 10,
-    height: 70,
+    height: 60,
     backgroundColor: '#01a699',
     borderRadius: 100,
   }
