@@ -1,6 +1,25 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 
+const CustomRow = ({ nome, descricao, preco }) => (
+    <View style={styles.container}>
+        {/* <Image source={{ uri: image_url }} style={styles.photo} /> */}
+        <View style={styles.container_text}>
+            <Text style={styles.nome}>
+                {nome}
+            </Text>
+            <Text style={styles.descricao}>
+                {descricao}
+            </Text>
+            <Text style={styles.price}>
+                R$: {preco}
+            </Text>
+            
+        </View>
+    </View>
+);
+
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -14,7 +33,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF',
         elevation: 2,
     },
-    title: {
+    nome: {
         fontSize: 16,
         color: '#000',
     },
@@ -24,29 +43,16 @@ const styles = StyleSheet.create({
         marginLeft: 12,
         justifyContent: 'center',
     },
-    description: {
-        fontSize: 11,
+    descricao: {
+        fontSize: 14,
         fontStyle: 'italic',
     },
-    photo: {
-        height: 50,
-        width: 50,
-    },
+    price: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: 'green',
+        textAlign: 'right'
+    }
 });
-
-const CustomRow = ({ title, description, image_url }) => (
-    <View style={styles.container}>
-        <Image source={{ uri: image_url }} style={styles.photo} />
-        <View style={styles.container_text}>
-            <Text style={styles.title}>
-                {title}
-            </Text>
-            <Text style={styles.description}>
-                {description}
-            </Text>
-        </View>
-
-    </View>
-);
 
 export default CustomRow;

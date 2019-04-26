@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import CustomListview from '../../src/components/CustomListView';
+import { db } from '../config/config';
 
 import {
   Platform,
@@ -11,6 +12,8 @@ import {
 import FloatButton from '../components/FloatButton';
 import { getFakeData } from '../services/FakeData';
 
+
+let itemsRef = db.ref('/products');
 export default class Home extends Component {
   static navigationOptions = {
     title: 'Home',
@@ -23,18 +26,31 @@ export default class Home extends Component {
     },
   };
 
+  state = {
+    items: []
+  };
+
   clickHandler = () => {
     this.props.navigation.navigate('Products')
   };
 
 
+  componentWillMount() {
+    itemsRef.on('value', snapshot => {
+      let data = snapshot.val();
+      let items = Object.values(data);
+      this.setState({ items })
+    }, error => {
+      console.log(error);
+    })
+  };
+
   render() {
-    const { navigate } = this.props.navigation;
+
     return (
       <View style={styles.container}>
         <CustomListview
-          itemList={getFakeData()}
-        />
+          itemList={this.state.items} />
         <FloatButton onPress={this.clickHandler.bind(this)} />
       </View>
     );

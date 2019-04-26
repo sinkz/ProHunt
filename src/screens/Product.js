@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native'
-import PickImage from '../components/PickImage';
 import { db } from '../config/config';
-
 
 let addItem = (nome, descricao, preco, img) => {
     db.ref('/products').push({
@@ -37,10 +35,11 @@ export default class Product extends Component {
         preco: '',
         img: null
     }
+    
 
     handleSubmit = () => {
         addItem(this.state.nome, this.state.descricao, this.state.preco, this.state.img);
-        Alert.alert('Item saved successfully');
+        this.props.navigation.navigate('Home')
     };
 
     pickImage(value) {
@@ -69,7 +68,7 @@ export default class Product extends Component {
                     maxLength={20}
                     onChangeText={(text) => this.setState({ preco: text })}
                 />
-                <PickImage pick={this.pickImage} />
+                {/* <PickImage pick={this.pickImage} /> */}
 
                 <TouchableOpacity
                     style={styles.saveButton}

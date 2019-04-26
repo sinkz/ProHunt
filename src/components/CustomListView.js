@@ -15,9 +15,9 @@ const CustomListview = ({ itemList }) => (
             data={itemList}
             renderItem={({ item }) =>
                 <CustomRow
-                    title={item.title}
-                    description={item.description}
-                    image_url={item.image_url} />
+                    nome={item.nome}
+                    descricao={item.descricao}
+                    preco={item.preco} />
             }
         />
     </View>
