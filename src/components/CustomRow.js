@@ -1,22 +1,23 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-const CustomRow = ({ nome, descricao, preco }) => (
-    <View style={styles.container}>
-        {/* <Image source={{ uri: image_url }} style={styles.photo} /> */}
-        <View style={styles.container_text}>
-            <Text style={styles.nome}>
-                {nome}
-            </Text>
-            <Text style={styles.descricao}>
-                {descricao}
-            </Text>
-            <Text style={styles.price}>
-                R$: {preco}
-            </Text>
-            
+const CustomRow = ({value, navigateDetails}) => (
+    <TouchableOpacity onPress={() => navigateDetails(value)}>
+        <View style={styles.container}>
+            {/* <Image source={{ uri: image_url }} style={styles.photo} /> */}
+            <View style={styles.container_text}>
+                <Text style={styles.nome}>
+                    {value.nome}
+                </Text>
+                <Text style={styles.descricao}>
+                    {value.descricao}
+                </Text>
+                <Text style={styles.price}>
+                    R$: {value.preco}
+                </Text>
+            </View>
         </View>
-    </View>
+    </TouchableOpacity>
 );
 
 
@@ -44,6 +45,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     descricao: {
+        marginTop: 5,
         fontSize: 14,
         fontStyle: 'italic',
     },

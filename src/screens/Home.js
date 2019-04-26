@@ -3,9 +3,7 @@ import CustomListview from '../../src/components/CustomListView';
 import { db } from '../config/config';
 
 import {
-  Platform,
   StyleSheet,
-  Text,
   View,
   Alert
 } from 'react-native';
@@ -34,6 +32,12 @@ export default class Home extends Component {
     this.props.navigation.navigate('Products')
   };
 
+  navigateDetails = (product) => {
+    this.props.navigation.navigate('ProductDetails', {
+      product: product,
+    });
+  };
+
 
   componentWillMount() {
     itemsRef.on('value', snapshot => {
@@ -50,7 +54,8 @@ export default class Home extends Component {
     return (
       <View style={styles.container}>
         <CustomListview
-          itemList={this.state.items} />
+          itemList={this.state.items} 
+          onPressNavigateDetails={this.navigateDetails.bind(this)}/>
         <FloatButton onPress={this.clickHandler.bind(this)} />
       </View>
     );

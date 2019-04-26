@@ -9,15 +9,16 @@ const styles = StyleSheet.create({
 });
 
 
-const CustomListview = ({ itemList }) => (
+const CustomListview = ({ itemList, onPressNavigateDetails }) => (
     <View style={styles.container}>
         <FlatList
             data={itemList}
             renderItem={({ item }) =>
-                <CustomRow
-                    nome={item.nome}
-                    descricao={item.descricao}
-                    preco={item.preco} />
+                <CustomRow value= {item}
+                    // nome={item.nome}
+                    // descricao={item.descricao}
+                    // preco={item.preco}
+                    navigateDetails = {onPressNavigateDetails} />
             }
         />
     </View>
