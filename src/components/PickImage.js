@@ -8,11 +8,6 @@ export default class PickImage extends Component {
         avatarSource: null,
     };
 
-    constructor(props) {
-        super(props);
-        this.selectPhotoTapped = this.selectPhotoTapped.bind(this);
-    };
-
     selectPhotoTapped() {
         const options = {
             title: 'Selecione uma imagem',
@@ -35,6 +30,8 @@ export default class PickImage extends Component {
                 this.setState({
                     avatarSource: source,
                 });
+
+                 this.props.pick(source);
             }
         });
     }

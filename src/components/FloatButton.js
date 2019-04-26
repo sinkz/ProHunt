@@ -3,10 +3,6 @@ import { StyleSheet, View, Image, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class FloatButton extends Component {
-  clickHandler = () => {
-    this.props.navigation.navigate('Products')
-    Alert.alert('Floating Button Clicked');
-  };
   render() {
     return (
       <View >

@@ -1,20 +1,52 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, TextInput, PixelRatio, TouchableOpacity, Image } from 'react-native'
-import ImagePicker from 'react-native-image-picker';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native'
 import PickImage from '../components/PickImage';
+import { db } from '../config/config';
+
+
+let addItem = (nome, descricao, preco, img) => {
+    db.ref('/products').push({
+        nome,
+        preco,
+        descricao,
+        img
+    }).then((data) => {
+        //success callback
+        console.log('data ', data)
+    }).catch((error) => {
+        //error callback
+        console.log('error ', error)
+    });
+};
 
 export default class Product extends Component {
     static navigationOptions = {
         title: 'Cadastro de Produtos',
         headerStyle: {
-          backgroundColor: '#01a699',
+            backgroundColor: '#01a699',
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
-          fontWeight: 'bold',
+            fontWeight: 'bold',
         },
-      };
-      
+    };
+
+    state = {
+        nome: '',
+        descricao: '',
+        preco: '',
+        img: null
+    }
+
+    handleSubmit = () => {
+        addItem(this.state.nome, this.state.descricao, this.state.preco, this.state.img);
+        Alert.alert('Item saved successfully');
+    };
+
+    pickImage(value) {
+        Alert.alert('Floating Button Clicked' + value.uri);
+    }
+
     render() {
         return (
             <View style={styles.inputContainer}>
@@ -22,27 +54,26 @@ export default class Product extends Component {
                     style={styles.textInput}
                     placeholder="Nome"
                     maxLength={20}
-                    onFocus={this.handleFocus}
-                    onBlur={this.handleBlur}
+                    onChangeText={(text) => this.setState({ nome: text })}
                 />
                 <TextInput
                     style={styles.textInput}
                     placeholder="Descrição"
                     maxLength={20}
-                    onFocus={this.handleFocus}
-                    onBlur={this.handleBlur}
+                    onChangeText={(text) => this.setState({ descricao: text })}
                 />
                 <TextInput
+                    keyboardType='numeric'
                     style={styles.textInput}
                     placeholder="Preço"
                     maxLength={20}
-                    onFocus={this.handleFocus}
-                    onBlur={this.handleBlur}
+                    onChangeText={(text) => this.setState({ preco: text })}
                 />
-                <PickImage/>
+                <PickImage pick={this.pickImage} />
 
                 <TouchableOpacity
-                    style={styles.saveButton}>
+                    style={styles.saveButton}
+                    onPress={this.handleSubmit}>
                     <Text style={styles.saveButtonText}>Salvar</Text>
                 </TouchableOpacity>
             </View>
