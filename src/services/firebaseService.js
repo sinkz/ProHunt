@@ -34,6 +34,10 @@ export default class FirebaseService {
         return query;
     }
 
+    static deleteProduct = async ({produto_id}) => {
+        
+    }
+
     static uploadImage = async (img, mime = 'application/octet-stream') => {
         const uploadUri = Platform.OS === 'ios' ? img.replace('file://', '') : img
         let uploadBlob = null
