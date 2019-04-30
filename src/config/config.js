@@ -8,9 +8,9 @@ let config = {
     messagingSenderId: "46952955886"
 
 };
-let app;
+let app = {};
 if (!firebase.apps.length) {
     app = firebase.initializeApp(config);
 }
 
-export const db = app.database();  
+export const db = !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();  

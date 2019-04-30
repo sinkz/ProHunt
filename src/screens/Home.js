@@ -9,9 +9,10 @@ import {
 } from 'react-native';
 import FloatButton from '../components/FloatButton';
 import { getFakeData } from '../services/FakeData';
+import FirebaseService from '../services/FirebaseService';
 
 
-let itemsRef = db.ref('/products');
+let itemsRef = db.database().ref('/products');
 export default class Home extends Component {
   static navigationOptions = {
     title: 'Home',
@@ -40,13 +41,11 @@ export default class Home extends Component {
 
 
   componentWillMount() {
-    itemsRef.on('value', snapshot => {
-      let data = snapshot.val();
-      let items = Object.values(data);
+
+    FirebaseService.getProducts(items => {
       this.setState({ items })
-    }, error => {
-      console.log(error);
-    })
+    });
+
   };
 
   render() {
@@ -54,8 +53,8 @@ export default class Home extends Component {
     return (
       <View style={styles.container}>
         <CustomListview
-          itemList={this.state.items} 
-          onPressNavigateDetails={this.navigateDetails.bind(this)}/>
+          itemList={this.state.items}
+          onPressNavigateDetails={this.navigateDetails.bind(this)} />
         <FloatButton onPress={this.clickHandler.bind(this)} />
       </View>
     );

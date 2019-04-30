@@ -1,23 +1,30 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native'
-import { db } from '../config/config';
+import PickImage from './../components/PickImage';
+import FirebaseService from './../services/FirebaseService';
 
-let addItem = (nome, descricao, preco, img) => {
-    db.ref('/products').push({
-        nome,
-        preco,
-        descricao,
-        img
-    }).then((data) => {
-        //success callback
-        console.log('data ', data)
-    }).catch((error) => {
-        //error callback
-        console.log('error ', error)
-    });
+let addItem = async (produto) => {
+    try {
+        await FirebaseService.addProduct(produto);
+    } catch (err) {
+        console.log("Erro ao salvar produto" + err);
+    }
+};
+
+let uploadImage = async ({ img }) => {
+    console.log(img);
+    try {
+        return await FirebaseService.uploadImage(img);
+    } catch (err) {
+        console.log("Erro ao salvar imagem" + err);
+    }
 };
 
 export default class Product extends Component {
+    constructor() {
+        super()
+        this.pickImage = this.pickImage.bind(this)
+    }
     static navigationOptions = {
         title: 'Cadastro de Produtos',
         headerStyle: {
@@ -30,20 +37,33 @@ export default class Product extends Component {
     };
 
     state = {
-        nome: '',
-        descricao: '',
-        preco: '',
-        img: null
+        produto: {
+            nome: '',
+            descricao: '',
+            preco: '',
+            img: null
+        }
     }
-    
 
-    handleSubmit = () => {
-        addItem(this.state.nome, this.state.descricao, this.state.preco, this.state.img);
+    handleSubmit = async () => {
+        let url = await uploadImage(this.state.produto);
+        this.handleImage(url);
+        await addItem(this.state.produto);
         this.props.navigation.navigate('Home')
+
     };
 
-    pickImage(value) {
-        Alert.alert('Floating Button Clicked' + value.uri);
+    pickImage = (value) => {
+        this.handleImage(value.uri)
+    }
+
+    handleImage = (url) => {
+        this.setState(prevState => ({
+            produto: {
+                ...prevState.produto,
+                img: url
+            }
+        }));
     }
 
     render() {
@@ -53,22 +73,38 @@ export default class Product extends Component {
                     style={styles.textInput}
                     placeholder="Nome"
                     maxLength={20}
-                    onChangeText={(text) => this.setState({ nome: text })}
+                    onChangeText={(text) => this.setState(prevState => ({
+                        produto: {
+                            ...prevState.produto,
+                            nome: text
+                        }
+                    }))}
+
                 />
                 <TextInput
                     style={styles.textInput}
                     placeholder="Descrição"
                     maxLength={20}
-                    onChangeText={(text) => this.setState({ descricao: text })}
+                    onChangeText={(text) => this.setState(prevState => ({
+                        produto: {
+                            ...prevState.produto,
+                            descricao: text
+                        }
+                    }))}
                 />
                 <TextInput
                     keyboardType='numeric'
                     style={styles.textInput}
                     placeholder="Preço"
                     maxLength={20}
-                    onChangeText={(text) => this.setState({ preco: text })}
+                    onChangeText={(text) => this.setState(prevState => ({
+                        produto: {
+                            ...prevState.produto,
+                            preco: text
+                        }
+                    }))}
                 />
-                {/* <PickImage pick={this.pickImage} /> */}
+                <PickImage pick={this.pickImage} />
 
                 <TouchableOpacity
                     style={styles.saveButton}
