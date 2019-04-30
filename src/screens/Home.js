@@ -5,14 +5,12 @@ import { db } from '../config/config';
 import {
   StyleSheet,
   View,
-  Alert
 } from 'react-native';
 import FloatButton from '../components/FloatButton';
 import { getFakeData } from '../services/FakeData';
 import FirebaseService from '../services/FirebaseService';
+import SwipeList from '../components/SwipeList';
 
-
-let itemsRef = db.database().ref('/products');
 export default class Home extends Component {
   static navigationOptions = {
     title: 'Home',
@@ -39,8 +37,13 @@ export default class Home extends Component {
     });
   };
 
+  deleteProduct = (key) => {
+    console.log(key);
+    console.log("Chamouu");
+  };
 
-  componentDidMount () {
+
+  componentDidMount() {
     FirebaseService.getProducts(items => {
       this.setState({ items })
     });
@@ -51,9 +54,10 @@ export default class Home extends Component {
 
     return (
       <View style={styles.container}>
-        <CustomListview
+        <SwipeList
           itemList={this.state.items}
-          onPressNavigateDetails={this.navigateDetails.bind(this)} />
+          onPressNavigateDetails={this.navigateDetails.bind(this)}
+          onPressDeleteProduct={this.deleteProduct.bind(this)} />
         <FloatButton onPress={this.clickHandler.bind(this)} />
       </View>
     );
