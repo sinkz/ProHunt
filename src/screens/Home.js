@@ -40,8 +40,7 @@ export default class Home extends Component {
   };
 
 
-  componentWillMount() {
-
+  componentDidMount () {
     FirebaseService.getProducts(items => {
       this.setState({ items })
     });
