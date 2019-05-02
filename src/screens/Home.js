@@ -35,15 +35,12 @@ class Home extends Component {
   };
 
   deleteProduct = async ({ product_id }) => {
-    console.log(product_id);
-    console.log("Chamouu");
     await FirebaseService.deleteProduct(product_id);
   };
 
 
   componentDidMount() {
     FirebaseService.getProducts(items => {
-      console.log("OPA: " + items)
       this.setState({ items, isLoading: false})
     });
 

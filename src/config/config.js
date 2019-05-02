@@ -6,11 +6,6 @@ let config = {
     projectId: "react-native-obj",
     storageBucket: "react-native-obj.appspot.com",
     messagingSenderId: "46952955886"
-
 };
-let app = {};
-if (!firebase.apps.length) {
-    app = firebase.initializeApp(config);
-}
 
 export const db = !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();  
