@@ -39,8 +39,6 @@ const styles = StyleSheet.create({
         color: '#000',
     },
     container_text: {
-        flex: 1,
-        flexDirection: 'column',
         marginLeft: 12,
         justifyContent: 'center',
     },

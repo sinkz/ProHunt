@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
-import CustomListview from '../../src/components/CustomListView';
-import { db } from '../config/config';
-
 import {
   StyleSheet,
   View,
 } from 'react-native';
 import FloatButton from '../components/FloatButton';
-import { getFakeData } from '../services/FakeData';
 import FirebaseService from '../services/FirebaseService';
 import SwipeList from '../components/SwipeList';
 
 export default class Home extends Component {
+  constructor() {
+    super();
+    console.ignoredYellowBox = [
+      'Setting a timer'
+    ];
+  }
+  
   static navigationOptions = {
     title: 'Home',
     headerStyle: {
@@ -37,26 +40,27 @@ export default class Home extends Component {
     });
   };
 
-  deleteProduct = (key) => {
-    console.log(key);
+  deleteProduct = async ({ product_id }) => {
+    console.log(product_id);
     console.log("Chamouu");
+    await FirebaseService.deleteProduct(product_id);
   };
 
 
   componentDidMount() {
     FirebaseService.getProducts(items => {
+      console.log("OPA: " + items)
       this.setState({ items })
     });
 
   };
 
   render() {
-
     return (
       <View style={styles.container}>
         <SwipeList
           itemList={this.state.items}
-          onPressNavigateDetails={this.navigateDetails.bind(this)}
+          onPressNavigateDetails={(e) => this.navigateDetails(e)}
           onPressDeleteProduct={this.deleteProduct.bind(this)} />
         <FloatButton onPress={this.clickHandler.bind(this)} />
       </View>

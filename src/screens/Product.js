@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native'
 import PickImage from './../components/PickImage';
-import FirebaseService from './../services/FirebaseService';
+import FirebaseService from '../services/FirebaseService';
 
 let addItem = async (produto) => {
     try {
@@ -24,6 +24,7 @@ export default class Product extends Component {
     constructor() {
         super()
         this.pickImage = this.pickImage.bind(this)
+
     }
     static navigationOptions = {
         title: 'Cadastro de Produtos',
@@ -38,10 +39,11 @@ export default class Product extends Component {
 
     state = {
         produto: {
+            product_id: Math.random().toString(36).substring(7),
             nome: '',
             descricao: '',
             preco: '',
-            img: null
+            img: ''
         }
     }
 
@@ -58,6 +60,9 @@ export default class Product extends Component {
     }
 
     handleImage = (url) => {
+        if (!url)
+            url = 'http://www.sparkawards.com/wp-content/uploads/2011/05/Product_Lg_Type.jpg';
+
         this.setState(prevState => ({
             produto: {
                 ...prevState.produto,

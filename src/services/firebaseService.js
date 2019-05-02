@@ -9,13 +9,14 @@ window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
 window.Blob = Blob
 
 export default class FirebaseService {
-    static addProduct = async ({ nome, preco, descricao, img }) => {
+    static addProduct = async ({ nome, preco, descricao, img, product_id }) => {
         try {
             let query = await db.database().ref('/products').push({
                 nome,
                 preco,
                 descricao,
-                img
+                img,
+                product_id
             });
             return query;
         } catch (erro) {
@@ -25,17 +26,30 @@ export default class FirebaseService {
 
     static getProducts = (callback) => {
         let query = db.database().ref('/products').on('value', snapshot => {
-            let data = snapshot.val();
-            let items = Object.values(data);
-            callback(items);
+            if (snapshot.exists()) {
+                let data = snapshot.val();
+                let items = Object.values(data);
+                callback(items);
+            }else{
+                callback("");
+                console.log("Não existe");
+            }
         }, error => {
             console.log(error);
         });
+   
         return query;
     }
 
-    static deleteProduct = async ({produto_id}) => {
-        
+    static deleteProduct = async (product_id) => {
+        let querySnapshot = await db.database().ref('/products').orderByChild("product_id").equalTo(product_id).once("value");
+        console.log(await querySnapshot.val());
+        console.log(querySnapshot.getRef());
+        querySnapshot.forEach((doc) => {
+            doc.getRef().remove().then(() => {
+                console.log("Removido!");
+            })
+        });
     }
 
     static uploadImage = async (img, mime = 'application/octet-stream') => {
@@ -51,7 +65,7 @@ export default class FirebaseService {
             let url = await imageRef.getDownloadURL();
             return url;
         } catch (error) {
-            console.log("ERRO BEBE: " + error);
+            console.log("Erro ao fazer upload da imagem: " + error);
         }
     }
 }

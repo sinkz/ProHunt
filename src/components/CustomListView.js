@@ -14,11 +14,8 @@ const CustomListview = ({ itemList, onPressNavigateDetails }) => (
         <FlatList
             data={itemList}
             renderItem={({ item }) =>
-                <CustomRow value= {item}
-                    // nome={item.nome}
-                    // descricao={item.descricao}
-                    // preco={item.preco}
-                    navigateDetails = {onPressNavigateDetails} />
+                <CustomRow value={item}
+                    navigateDetails={onPressNavigateDetails} />
             }
         />
     </View>

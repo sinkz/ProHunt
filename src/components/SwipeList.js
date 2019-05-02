@@ -14,7 +14,7 @@ const SwipeList = ({ itemList, onPressNavigateDetails, onPressDeleteProduct }) =
         <SwipeListView
             useFlatList
             data={itemList}
-            renderItem={(data) => (
+            renderItem={(data, rowMap) => (
                 <TouchableHighlight
                     onPress={() => onPressNavigateDetails(data.item)}
                     style={styles.rowFront}
@@ -28,9 +28,10 @@ const SwipeList = ({ itemList, onPressNavigateDetails, onPressDeleteProduct }) =
                     </View>
                 </TouchableHighlight>
             )}
-            renderHiddenItem={(data) => (
+            renderHiddenItem={(data, rowMap) => (
                 <View style={styles.rowBack}>
                     <TouchableOpacity style={styles.backRightBtn} onPress={() => onPressDeleteProduct(data.item)}>
+                    
                         <Image source={require('../../images/trash.png')} style={styles.trash} />
                     </TouchableOpacity>
                 </View>
@@ -39,8 +40,6 @@ const SwipeList = ({ itemList, onPressNavigateDetails, onPressDeleteProduct }) =
             previewRowKey={'0'}
             previewOpenValue={-40}
             previewOpenDelay={3000}
-            onRowDidOpen={this.onRowDidOpen}
-            onSwipeValueChange={this.onSwipeValueChange}
         />
     </View>
 );
