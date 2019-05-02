@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { withLoading } from '../hocs/withLoading';
 
-export default class FloatButton extends Component {
+class FloatButton extends Component {
   render() {
     return (
-      <View >
+      <View style={styles.container}>
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => this.props.onPress()}
@@ -16,8 +17,10 @@ export default class FloatButton extends Component {
     );
   }
 }
-
 const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
   TouchableOpacityStyle: {
     borderWidth: 1,
     borderColor: 'rgba(0,0,0,0.2)',
@@ -32,3 +35,5 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   }
 });
+
+export default FloatButton;

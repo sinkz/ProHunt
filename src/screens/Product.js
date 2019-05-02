@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
 import PickImage from './../components/PickImage';
 import FirebaseService from '../services/FirebaseService';
 
@@ -21,22 +21,11 @@ let uploadImage = async ({ img }) => {
 };
 
 export default class Product extends Component {
-    constructor() {
-        super()
-        this.pickImage = this.pickImage.bind(this)
 
-    }
     static navigationOptions = {
-        title: 'Cadastro de Produtos',
-        headerStyle: {
-            backgroundColor: '#01a699',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-            fontWeight: 'bold',
-        },
+        title: 'Cadastro de Produtos'
     };
-
+    
     state = {
         produto: {
             product_id: Math.random().toString(36).substring(7),
@@ -44,13 +33,18 @@ export default class Product extends Component {
             descricao: '',
             preco: '',
             img: ''
-        }
+        },
+        isLoading: false
     }
 
     handleSubmit = async () => {
+        this.setState({ isLoading: true })
+
         let url = await uploadImage(this.state.produto);
         this.handleImage(url);
         await addItem(this.state.produto);
+
+        this.setState({ isLoading: false })
         this.props.navigation.navigate('Home')
 
     };
@@ -109,13 +103,18 @@ export default class Product extends Component {
                         }
                     }))}
                 />
-                <PickImage pick={this.pickImage} />
+                <PickImage pick={(e) => this.pickImage(e)} />
 
                 <TouchableOpacity
                     style={styles.saveButton}
                     onPress={this.handleSubmit}>
                     <Text style={styles.saveButtonText}>Salvar</Text>
                 </TouchableOpacity>
+                {this.state.isLoading &&
+                    <View >
+                        <ActivityIndicator size='large' />
+                    </View>
+                }
             </View>
         )
     }

@@ -3,14 +3,7 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 
 export default class ProductDetails extends Component {
   static navigationOptions = {
-    title: 'Detalhes do Produto',
-    headerStyle: {
-      backgroundColor: '#01a699',
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
+    title: 'Detalhes do Produto'
   };
 
   render() {

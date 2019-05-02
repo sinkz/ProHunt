@@ -8,6 +8,7 @@ import {
     View
 } from 'react-native';
 import { SwipeListView} from 'react-native-swipe-list-view';
+import withLoadingScreen from '../hocs/withLoading';
 
 const SwipeList = ({ itemList, onPressNavigateDetails, onPressDeleteProduct }) => (
     <View style={styles.container}>
@@ -47,7 +48,6 @@ const SwipeList = ({ itemList, onPressNavigateDetails, onPressDeleteProduct }) =
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#FFF',
-        flex: 1,
     },
     containerImg: {
         flex: 1,
@@ -100,5 +100,5 @@ const styles = StyleSheet.create({
     },
 });
 
-export default SwipeList;
+export default withLoadingScreen(SwipeList);
 

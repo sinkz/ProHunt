@@ -5,8 +5,18 @@ import ProductDetails from './../screens/ProductDetails';
 
 const AppNavigator = createStackNavigator({
   Home: { screen: Home },
-  Products: { screen: Products},
-  ProductDetails: {screen: ProductDetails}
-});
+  Products: { screen: Products },
+  ProductDetails: { screen: ProductDetails }
+}, {
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: '#01a699',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      }
+    }
+  });
 
 export default createAppContainer(AppNavigator);

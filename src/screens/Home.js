@@ -7,7 +7,7 @@ import FloatButton from '../components/FloatButton';
 import FirebaseService from '../services/FirebaseService';
 import SwipeList from '../components/SwipeList';
 
-export default class Home extends Component {
+class Home extends Component {
   constructor() {
     super();
     console.ignoredYellowBox = [
@@ -17,17 +17,11 @@ export default class Home extends Component {
   
   static navigationOptions = {
     title: 'Home',
-    headerStyle: {
-      backgroundColor: '#01a699',
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
   };
 
   state = {
-    items: []
+    items: [],
+    isLoading: true
   };
 
   clickHandler = () => {
@@ -50,7 +44,7 @@ export default class Home extends Component {
   componentDidMount() {
     FirebaseService.getProducts(items => {
       console.log("OPA: " + items)
-      this.setState({ items })
+      this.setState({ items, isLoading: false})
     });
 
   };
@@ -59,6 +53,7 @@ export default class Home extends Component {
     return (
       <View style={styles.container}>
         <SwipeList
+          isLoading={this.state.isLoading}
           itemList={this.state.items}
           onPressNavigateDetails={(e) => this.navigateDetails(e)}
           onPressDeleteProduct={this.deleteProduct.bind(this)} />
@@ -74,3 +69,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#FCFCFC',
   }
 });
+
+export default Home;
