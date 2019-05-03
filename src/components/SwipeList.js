@@ -29,6 +29,7 @@ const SwipeList = ({ itemList, onPressNavigateDetails, onPressDeleteProduct }) =
                     </View>
                 </TouchableHighlight>
             )}
+            keyExtractor={(data, index) => index.toString()}
             renderHiddenItem={(data, rowMap) => (
                 <View style={styles.rowBack}>
                     <TouchableOpacity style={styles.backRightBtn}

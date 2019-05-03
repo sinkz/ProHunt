@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import {
   StyleSheet,
   View,
+  YellowBox
 } from 'react-native';
 import FloatButton from '../components/FloatButton';
 import FirebaseService from '../services/FirebaseService';
@@ -10,9 +11,8 @@ import SwipeList from '../components/SwipeList';
 class Home extends PureComponent {
   constructor() {
     super();
-    console.ignoredYellowBox = [
-      'Setting a timer'
-    ];
+    YellowBox.ignoreWarnings(['Setting a timer']);
+    YellowBox.ignoreWarnings(['Warning: componentWill'])
   }
   
   static navigationOptions = {
@@ -38,12 +38,10 @@ class Home extends PureComponent {
     await FirebaseService.deleteProduct(product_id);
   };
 
-
   componentDidMount() {
     FirebaseService.getProducts(items => {
       this.setState({ items, isLoading: false})
     });
-
   };
 
   render() {
@@ -52,9 +50,9 @@ class Home extends PureComponent {
         <SwipeList
           isLoading={this.state.isLoading}
           itemList={this.state.items}
-          onPressNavigateDetails={(e) => this.navigateDetails(e)}
-          onPressDeleteProduct={this.deleteProduct.bind(this)} />
-        <FloatButton onPress={this.clickHandler.bind(this)} />
+          onPressNavigateDetails={(product) => this.navigateDetails(product)}
+          onPressDeleteProduct={(product) => this.deleteProduct(product)} />
+        <FloatButton onPressFloatButton={this.clickHandler.bind(this)} />
       </View>
     );
   }

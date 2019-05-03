@@ -13,10 +13,12 @@ let addItem = async (produto) => {
 
 let uploadImage = async ({ img }) => {
     console.log(img);
-    try {
-        return await FirebaseService.uploadImage(img);
-    } catch (err) {
-        console.log("Erro ao salvar imagem" + err);
+    if (img) {
+        try {
+            return await FirebaseService.uploadImage(img);
+        } catch (err) {
+            console.log("Erro ao salvar imagem" + err);
+        }
     }
 };
 
@@ -25,7 +27,7 @@ export default class Product extends PureComponent {
     static navigationOptions = {
         title: 'Cadastro de Produtos'
     };
-    
+
     state = {
         produto: {
             product_id: Math.random().toString(36).substring(7),
@@ -46,7 +48,6 @@ export default class Product extends PureComponent {
 
         this.setState({ isLoading: false })
         this.props.navigation.navigate('Home')
-
     };
 
     pickImage = (value) => {

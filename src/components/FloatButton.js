@@ -1,22 +1,18 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { withLoading } from '../hocs/withLoading';
 
-class FloatButton extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
+const FloatButton = ({ onPressFloatButton }) => (
+<View style={styles.container}>
         <TouchableOpacity
           activeOpacity={0.7}
-          onPress={() => this.props.onPress()}
+          onPress={() => onPressFloatButton()}
           style={styles.TouchableOpacityStyle}>
           <Icon name="plus" size={18} color="#fff" />
         </TouchableOpacity>
       </View>
-    );
-  }
-}
+)
+
 const styles = StyleSheet.create({
   container: {
     flex: 1
