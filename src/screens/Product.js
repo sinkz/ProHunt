@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
 import PickImage from './../components/PickImage';
 import FirebaseService from '../services/FirebaseService';
@@ -20,7 +20,7 @@ let uploadImage = async ({ img }) => {
     }
 };
 
-export default class Product extends Component {
+export default class Product extends PureComponent {
 
     static navigationOptions = {
         title: 'Cadastro de Produtos'

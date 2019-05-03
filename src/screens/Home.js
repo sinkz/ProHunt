@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {
   StyleSheet,
   View,
@@ -7,7 +7,7 @@ import FloatButton from '../components/FloatButton';
 import FirebaseService from '../services/FirebaseService';
 import SwipeList from '../components/SwipeList';
 
-class Home extends Component {
+class Home extends PureComponent {
   constructor() {
     super();
     console.ignoredYellowBox = [

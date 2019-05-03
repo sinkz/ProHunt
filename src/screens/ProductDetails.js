@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 
-export default class ProductDetails extends Component {
+export default class ProductDetails extends PureComponent {
   static navigationOptions = {
     title: 'Detalhes do Produto'
   };

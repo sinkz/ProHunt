@@ -7,7 +7,7 @@ import {
     TouchableHighlight,
     View
 } from 'react-native';
-import { SwipeListView} from 'react-native-swipe-list-view';
+import { SwipeListView } from 'react-native-swipe-list-view';
 import withLoadingScreen from '../hocs/withLoading';
 
 const SwipeList = ({ itemList, onPressNavigateDetails, onPressDeleteProduct }) => (
@@ -31,8 +31,8 @@ const SwipeList = ({ itemList, onPressNavigateDetails, onPressDeleteProduct }) =
             )}
             renderHiddenItem={(data, rowMap) => (
                 <View style={styles.rowBack}>
-                    <TouchableOpacity style={styles.backRightBtn} onPress={() => onPressDeleteProduct(data.item)}>
-                    
+                    <TouchableOpacity style={styles.backRightBtn}
+                        onPress={() => onPressDeleteProduct(data.item)}>
                         <Image source={require('../../images/trash.png')} style={styles.trash} />
                     </TouchableOpacity>
                 </View>
