@@ -1,14 +1,19 @@
 
-import React, { Component } from 'react'
-import { StyleSheet, Text, View, TextInput, PixelRatio, TouchableOpacity, Image } from 'react-native'
+import React, { useState } from 'react';
+import {
+    StyleSheet,
+    Text,
+    View,
+    PixelRatio,
+    TouchableOpacity,
+    Image
+} from 'react-native'
 import ImagePicker from 'react-native-image-picker';
 
-export default class PickImage extends Component {
-    state = {
-        avatarSource: null,
-    };
+function PickImage({ pick }) {
+    const [avatarSource, setAvatarSource] = useState(null);
 
-    selectPhotoTapped() {
+    function selectPhotoTapped(){
         const options = {
             title: 'Selecione uma imagem',
             quality: 1.0,
@@ -19,40 +24,39 @@ export default class PickImage extends Component {
             },
         };
         ImagePicker.showImagePicker(options, (response) => {
-            if (response.didCancel) {
-                console.log('User cancelled photo picker');
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            } else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
-            } else {
-                let source = { uri: response.uri };
-                this.setState({
-                    avatarSource: source,
-                });
-
-                 this.props.pick(source);
+            switch (response) {
+                case response.didCancel:
+                    console.log('User cancelled photo picker');
+                    break;
+                case response.error:
+                    console.log('ImagePicker Error: ', response.error);
+                    break;
+                case response.customButton:
+                    console.log('User tapped custom button: ', response.customButton);
+                    break;
+                default:
+                    let source = { uri: response.uri };
+                    setAvatarSource(source);
+                    pick(source);
+                    break;
             }
         });
     }
-    render() {
-        return (
-            <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)} style={styles.container}>
-                <View
-                    style={[
-                        styles.avatar,
-                        styles.avatarContainer,
-                    ]}>
-                    {this.state.avatarSource === null ?
-                        (<Text>Imagem</Text>)
-                        :
-                        (<Image style={styles.avatar} source={this.state.avatarSource} />)
-                    }
-                </View>
-            </TouchableOpacity>
-
-        )
-    }
+    return (
+        <TouchableOpacity onPress={() => selectPhotoTapped()} style={styles.container}>
+            <View
+                style={[
+                    styles.avatar,
+                    styles.avatarContainer,
+                ]}>
+                {avatarSource === null ?
+                    (<Text>Imagem</Text>)
+                    :
+                    (<Image style={styles.avatar} source={avatarSource} />)
+                }
+            </View>
+        </TouchableOpacity>
+    )
 }
 
 const styles = StyleSheet.create({
@@ -75,3 +79,5 @@ const styles = StyleSheet.create({
         height: 150,
     },
 });
+
+export default PickImage
